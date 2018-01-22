@@ -393,6 +393,12 @@ export default class SpellCheckHandler {
     if (isMac && this.currentSpellchecker) {
       d(`Setting current spellchecker to ${langCode}`);
       this.currentSpellcheckerLanguage = langCode;
+      if (webFrame) {
+        webFrame.setSpellCheckProvider(
+          this.currentSpellcheckerLanguage,
+          this.shouldAutoCorrect,
+          { spellCheck: this.handleElectronSpellCheck.bind(this) });
+      }
       return this.currentSpellchecker.setDictionary(langCode);
     }
 
